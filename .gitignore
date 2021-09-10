@@ -77,3 +77,4 @@ typings/
 
 src/test.ts
 dist/
+src/scenes/testScene.ts
