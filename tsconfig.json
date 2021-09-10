@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+
+    "outDir": "./dist",
+    "noEmitOnError": true,
+    "lib": ["DOM", "ES2015"],
+    "target": "ES5",
+    "watch": true,
+    "experimentalDecorators": true
+  }
+}
