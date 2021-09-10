@@ -1,0 +1,112 @@
+{
+  "countries": [
+    { "id": 1, "name": "россия", "region": "cis" },
+    { "id": 2, "name": "германия", "region": "eu" },
+    { "id": 3, "name": "америка", "region": "america" }
+  ],
+  "authors": [
+    {
+      "id": 1,
+      "name": { "first": "Александр", "second": "Пушкин" },
+      "country": 1
+    },
+    {
+      "id": 2,
+      "name": { "first": "Фридрих", "second": "Ницше" },
+      "country": 2
+    },
+    {
+      "id": 3,
+      "name": { "first": "Джек", "second": "Лондон" },
+      "country": 3
+    },
+    {
+      "id": 4,
+      "name": { "first": "Федор", "second": "Достоевский" },
+      "country": 1
+    },
+    {
+      "id": 5,
+      "name": { "first": "Лев", "second": "Толстой" },
+      "country": 1
+    },
+    {
+      "id": 6,
+      "name": { "first": "Антон", "second": "Чехов" },
+      "country": 1
+    },
+    {
+      "id": 7,
+      "name": { "first": "Николай", "second": "Гоголь" },
+      "country": 1
+    },
+    {
+      "id": 8,
+      "name": { "first": "Михаил", "second": "Лермонтов" },
+      "country": 1
+    },
+    {
+      "id": 9,
+      "name": { "first": "Иван", "second": "Тургенев" },
+      "country": 1
+    },
+    {
+      "id": 10,
+      "name": { "first": "Михаил", "second": "Булгаков" },
+      "country": 1
+    },
+    {
+      "id": 11,
+      "name": { "first": "Максим", "second": "Горький" },
+      "country": 1
+    },
+    {
+      "id": 12,
+      "name": { "first": "Афанасий", "second": "Фет" },
+      "country": 1
+    },
+    {
+      "id": 13,
+      "name": { "first": "Марина", "second": "Цветаева" },
+      "country": 1
+    }
+  ],
+  "books": [
+    {
+      "id": "1",
+      "name": "Пиковая дама",
+      "short": "Про пиковую даму",
+      "author": "1"
+    },
+    {
+      "id": "2",
+      "name": "Капитанская дочка",
+      "short": "Про капитанскую дочку",
+      "author": "1"
+    },
+    {
+      "id": "3",
+      "name": "Песнь о вещем Олеге",
+      "short": "Про вещевого Олега",
+      "author": 1
+    },
+    {
+      "id": 4,
+      "name": "Так говорил Заратустра",
+      "short": "Там говорит Заратустра",
+      "author": 2
+    },
+    {
+      "id": 5,
+      "name": "Казус Вагнера",
+      "short": "Про казус Вагнера",
+      "author": 2
+    },
+    {
+      "id": 6,
+      "name": "Зов предков",
+      "short": "Предки зовут",
+      "author": 3
+    }
+  ]
+}
