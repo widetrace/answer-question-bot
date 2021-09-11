@@ -15,6 +15,7 @@ export default class BaseAction {
   private async registerBaseCommands(): Promise<void> {
     try {
       this.onStart();
+      this.onCommands();
     } catch (err) {
       throw new Error(err);
     }
@@ -24,5 +25,14 @@ export default class BaseAction {
     this.bot.start(async (ctx) => {
       await ctx.reply('Hello from base command');
     });
+  }
+
+  private onCommands(): void {
+    this.bot.command('test1', async (ctx) => {
+      ctx.session.sessionProp = 'test';
+      ctx.scene.enter('search');
+      console.log(ctx.session.sessionProp);
+    });
+    this.bot.command('test2', (ctx) => { console.log(ctx.session.sessionProp); });
   }
 }

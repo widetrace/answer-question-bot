@@ -3,8 +3,10 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 
 import { Scenes, session, Telegraf } from 'telegraf';
+import SearchScene from './scenes/searchScene';
 import Bot from './types/bot';
 import BaseActions from './actions/baseActions';
+
 // import testScene from './scenes/testScene';
 
 const token = '1848068511:AAEDicoBS_NTNLjGCDhDjDzaGgwzOl6YXDs';
@@ -43,7 +45,7 @@ export default class TelegramBot {
   }
 
   private registerScenes = (): void => {
-    const stage = new Scenes.Stage<Bot.IContext>([]);
+    const stage = new Scenes.Stage<Bot.IContext>([SearchScene.search()]);
     TelegramBot.bot.use(session());
     TelegramBot.bot.use(stage.middleware());
     TelegramBot.bot.use((ctx, next) => {
