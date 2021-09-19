@@ -3,13 +3,17 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 
 import { Scenes, session, Telegraf } from 'telegraf';
+
 import SearchScene from './scenes/searchScene';
+import RandomScene from './scenes/randomScene';
+
 import Bot from './types/bot';
+
 import BaseActions from './actions/baseActions';
 
-// import testScene from './scenes/testScene';
+import token from './token';
 
-const token = '1848068511:AAEDicoBS_NTNLjGCDhDjDzaGgwzOl6YXDs';
+// import testScene from './scenes/testScene';
 if (token === undefined) {
   throw new Error('BOT_TOKEN must be provided!');
 }
@@ -45,7 +49,7 @@ export default class TelegramBot {
   }
 
   private registerScenes = (): void => {
-    const stage = new Scenes.Stage<Bot.IContext>([SearchScene.search()]);
+    const stage = new Scenes.Stage<Bot.IContext>([SearchScene.search(), RandomScene.search()]);
     TelegramBot.bot.use(session());
     TelegramBot.bot.use(stage.middleware());
     TelegramBot.bot.use((ctx, next) => {

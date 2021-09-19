@@ -33,6 +33,9 @@ export default class BaseAction {
       ctx.scene.enter('search');
       console.log(ctx.session.sessionProp);
     });
-    this.bot.command('test2', (ctx) => { console.log(ctx.session.sessionProp); });
+    this.bot.command('test2', (ctx) => {
+      ctx.scene.enter('random');
+      console.log(ctx.session.sessionProp);
+    });
   }
 }
