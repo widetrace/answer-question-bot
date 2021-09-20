@@ -4,8 +4,7 @@
 
 import { Scenes, session, Telegraf } from 'telegraf';
 
-import SearchScene from './scenes/searchScene';
-import RandomScene from './scenes/randomScene';
+import scenes from './scenes';
 
 import Bot from './types/bot';
 
@@ -13,7 +12,6 @@ import BaseActions from './actions/baseActions';
 
 import token from './token';
 
-// import testScene from './scenes/testScene';
 if (token === undefined) {
   throw new Error('BOT_TOKEN must be provided!');
 }
@@ -49,7 +47,7 @@ export default class TelegramBot {
   }
 
   private registerScenes = (): void => {
-    const stage = new Scenes.Stage<Bot.IContext>([SearchScene.search(), RandomScene.search()]);
+    const stage = new Scenes.Stage<Bot.IContext>(scenes);
     TelegramBot.bot.use(session());
     TelegramBot.bot.use(stage.middleware());
     TelegramBot.bot.use((ctx, next) => {

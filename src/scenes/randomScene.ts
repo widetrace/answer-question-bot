@@ -10,7 +10,7 @@ export default class RandomScene {
     exitFromSearch: 'EXIT_FROM_SEARCH',
   }
 
-  static search(): Scenes.BaseScene<Bot.IContext> {
+  static init(): Scenes.BaseScene<Bot.IContext> {
     const scene = new Scenes.BaseScene<Bot.IContext>('random');
 
     scene.enter((ctx) => {
