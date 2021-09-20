@@ -7,14 +7,13 @@ import Bot from '../types/bot';
 export default class SearchScene {
   private static ACTIONS = {
     findByCountry: 'FIND_BY_COUNTRY',
-    findByRegion: 'FIND_BY_REGION',
     findBySurname: 'FIND_BY_NAME',
+    findByTag: 'FIND_BY_TAG',
     exitFromSearch: 'EXIT_FROM_SEARCH',
   }
 
   static FILTER_BUTTONS = [
     Markup.button.callback('👉 Поиск по странам', SearchScene.ACTIONS.findByCountry),
-    Markup.button.callback('👉 Поиск по региону', SearchScene.ACTIONS.findByRegion),
     Markup.button.callback('👉 Поиск по фамилии', SearchScene.ACTIONS.findBySurname),
   ]
 
@@ -40,6 +39,10 @@ export default class SearchScene {
       await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
 
       ctx.scene.enter('start');
+    });
+
+    scene.action(SearchScene.ACTIONS.findByCountry, (ctx) => {
+      ctx.scene.enter('countrySearch');
     });
 
     return scene;
