@@ -17,7 +17,7 @@ interface authorsList {
 export default class authorSearch {
   static list: Array<authorsList>
 
-  static authorButtons(list?): Array<string> {
+  static authorButtons(): Array<string> {
     const arrayButtons = [];
 
     this.list.forEach((element) => {
@@ -28,13 +28,10 @@ export default class authorSearch {
   }
 
   static hearings(scene: Scenes.BaseScene<Bot.IContext>) {
-    // this.authorButtons().forEach((el) => {
-    //   scene.hears(el, (ctx) => { ctx.reply('heard u'); });
-    // });
     this.list.forEach((el) => {
       scene.hears(`${el.name.first} ${el.name.second}`, (ctx) => {
         ctx.session.authorId = el.id;
-        ctx.reply(`Author ID: ${el.id}`);
+        ctx.scene.enter('bookSearch');
       });
     });
   }
@@ -54,17 +51,9 @@ export default class authorSearch {
       authorSearch.hearings(scene);
 
       await ctx.deleteMessage(ctx.session.prevMessage);
-      console.log(authorSearch.list);
-      ctx.reply('Выберите автора из меню', Markup.keyboard(authorSearch.authorButtons(authorSearch.list)).oneTime());
+
+      ctx.reply('Выберите автора из меню', Markup.keyboard(authorSearch.authorButtons()).oneTime());
     });
-
-    // scene.on('text', (ctx) => {
-    //   ctx.scene.reenter();
-    // });
-
-    // scene.on('message', (ctx) => {
-    //   ctx.reply('Выберите автора из списка');
-    // });
 
     return scene;
   }

@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 
-import { Markup, Scenes } from 'telegraf';
+import { Scenes } from 'telegraf';
 import axios from 'axios';
 import Bot from '../types/bot';
 
@@ -18,7 +18,11 @@ export default class countrySearch {
         ctx.scene.enter('start');
         throw new Error(error);
       }
-      await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+
+      if (ctx.callbackQuery.message.message_id) {
+        await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+      }
+
       ({ message_id: ctx.session.prevMessage } = await ctx.reply('Введите название страны'));
     });
 
@@ -27,14 +31,16 @@ export default class countrySearch {
 
       if (countryNames.includes(ctx.message.text.toLowerCase())) {
         ctx.deleteMessage(ctx.session.prevMessage);
+
         ({ message_id: ctx.session.prevMessage } = ctx.message);
-        ({ id: ctx.session.countryId } = countrySearch.countriesList.find((el) => el.name == ctx.message.text.toLowerCase()));
-        // ctx.session.countryName = ctx.message.text.toLowerCase();
-        // console.log(ctx.session.countryId);
+
+        ({ id: ctx.session.countryId } = countrySearch.countriesList
+          .find((el) => el.name === ctx.message.text.toLowerCase()));
+
         ctx.scene.enter('authorSearch');
       } else {
         ctx.reply('Такой страны нет');
-        ctx.scene.leave();
+        ctx.scene.reenter();
       }
     });
 

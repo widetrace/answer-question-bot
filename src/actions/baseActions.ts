@@ -1,20 +1,11 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-import { Telegraf, Markup } from 'telegraf';
+import { Telegraf } from 'telegraf';
 import TgBot from '../index';
 import Bot from '../types/bot';
 
 export default class BaseAction {
   private readonly bot: Telegraf<Bot.IContext>;
-
-  private static ACTIONS = {
-    search: 'SEARCH',
-    random: 'RANDOM',
-  }
-
-  static SEARCH_BUTTON = [Markup.button.callback('Поиск', BaseAction.ACTIONS.search)]
-
-  static RANDOM_BUTTON = [Markup.button.callback('Случайная книга', BaseAction.ACTIONS.random)]
 
   constructor() {
     this.bot = TgBot.bot;
@@ -26,8 +17,8 @@ export default class BaseAction {
   private async registerBaseCommands(): Promise<void> {
     try {
       this.onStart();
-      this.onActions();
-      this.onCommands();
+      // this.onActions();
+      // this.onCommands();
     } catch (err) {
       throw new Error(err);
     }
@@ -35,15 +26,13 @@ export default class BaseAction {
 
   private onStart(): void {
     this.bot.start(async (ctx) => {
-      ctx.session.sessionProp = 'test';
-      await ctx.reply('Добро пожаловать!', Markup
-        .inlineKeyboard([BaseAction.SEARCH_BUTTON, BaseAction.RANDOM_BUTTON]));
+      ctx.reply('Добро пожаловать!');
+      ctx.scene.enter('start');
     });
   }
 
   private onCommands(): void {
     this.bot.command('test1', async (ctx) => {
-      ctx.scene.enter('search');
       console.log(ctx.session.sessionProp);
     });
     this.bot.command('test2', (ctx) => {
@@ -52,14 +41,13 @@ export default class BaseAction {
     });
   }
 
-  private onActions(): void {
-    this.bot.action(BaseAction.ACTIONS.search, (ctx) => {
-      console.log(ctx.session.sessionProp);
-      ctx.reply('Начинаем поиск');
-    });
+  // private onActions(): void {
+  //   this.bot.action(BaseAction.ACTIONS.search, (ctx) => {
+  //     ctx.scene.enter('search');
+  //   });
 
-    this.bot.action(BaseAction.ACTIONS.random, (ctx) => {
-      ctx.reply('Ищем случайную книгу');
-    });
-  }
+  //   this.bot.action(BaseAction.ACTIONS.random, (ctx) => {
+  //     ctx.reply('Ищем случайную книгу');
+  //   });
+  // }
 }
