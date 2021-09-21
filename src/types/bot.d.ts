@@ -6,7 +6,10 @@ declare namespace Bot {
   }
 
   interface ISession extends Scenes.SceneSession<ISceneSession> {
-    sessionProp: string
+    sessionProp: string,
+    prevMessage: number,
+    countryId: number,
+    authorId: number,
   }
 
   interface IContext extends Context {

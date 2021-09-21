@@ -19,15 +19,23 @@ export default class countrySearch {
         throw new Error(error);
       }
       await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
-      ctx.reply('Введите название страны');
+      ({ message_id: ctx.session.prevMessage } = await ctx.reply('Введите название страны'));
     });
 
     scene.on('text', (ctx) => {
       const countryNames = countrySearch.countriesList.map((country) => country.name);
 
-      countryNames.includes(ctx.message.text.toLowerCase())
-        ? ctx.reply('Страна такая есть')
-        : ctx.reply('Такой страны нет');
+      if (countryNames.includes(ctx.message.text.toLowerCase())) {
+        ctx.deleteMessage(ctx.session.prevMessage);
+        ({ message_id: ctx.session.prevMessage } = ctx.message);
+        ({ id: ctx.session.countryId } = countrySearch.countriesList.find((el) => el.name == ctx.message.text.toLowerCase()));
+        // ctx.session.countryName = ctx.message.text.toLowerCase();
+        // console.log(ctx.session.countryId);
+        ctx.scene.enter('authorSearch');
+      } else {
+        ctx.reply('Такой страны нет');
+        ctx.scene.leave();
+      }
     });
 
     scene.on('message', (ctx) => {
