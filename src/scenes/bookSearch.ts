@@ -47,7 +47,7 @@ export default class bookSearch {
 
       bookSearch.hearings(scene);
 
-      ctx.reply('Выберите автора из меню', Markup.keyboard(bookSearch.buttons()).oneTime());
+      ctx.reply('Выберите книгу из меню', Markup.keyboard(bookSearch.buttons()).oneTime());
     });
 
     return scene;

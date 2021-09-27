@@ -13,8 +13,9 @@ export default class SearchScene {
   }
 
   static FILTER_BUTTONS = [
-    Markup.button.callback('👉 Поиск по странам', SearchScene.ACTIONS.findByCountry),
-    Markup.button.callback('👉 Поиск по фамилии', SearchScene.ACTIONS.findBySurname),
+    [Markup.button.callback('👉 Поиск по странам', SearchScene.ACTIONS.findByCountry)],
+    [Markup.button.callback('👉 Поиск по фамилии', SearchScene.ACTIONS.findBySurname)],
+    [Markup.button.callback('👉 Поиск по ключевому слову', SearchScene.ACTIONS.findByTag)],
   ]
 
   static EXIT_BUTTON = [Markup.button.callback('Выйти из поиска', SearchScene.ACTIONS.exitFromSearch)]
@@ -24,7 +25,7 @@ export default class SearchScene {
 
     scene.enter(async (ctx) => {
       ctx.reply('📚 Выберите фильтр: ',
-        Markup.inlineKeyboard([SearchScene.FILTER_BUTTONS, SearchScene.EXIT_BUTTON]));
+        Markup.inlineKeyboard([...SearchScene.FILTER_BUTTONS, SearchScene.EXIT_BUTTON]));
 
       // ctx.contextProp = 'just prop';
       // ctx.session.sessionProp = 'session session prop';
@@ -43,6 +44,10 @@ export default class SearchScene {
 
     scene.action(SearchScene.ACTIONS.findByCountry, (ctx) => {
       ctx.scene.enter('countrySearch');
+    });
+
+    scene.action(SearchScene.ACTIONS.findBySurname, async (ctx) => {
+      ctx.scene.enter('nameSearch');
     });
 
     return scene;
