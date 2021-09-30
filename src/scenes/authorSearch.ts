@@ -29,8 +29,13 @@ export default class authorSearch {
 
   static hearings(scene: Scenes.BaseScene<Bot.IContext>) {
     this.list.forEach((el) => {
-      scene.hears(`${el.name.first} ${el.name.second}`, (ctx) => {
+      scene.hears(`${el.name.first} ${el.name.second}`, async (ctx) => {
         ctx.session.authorId = el.id;
+
+        await ctx.deleteMessage(ctx.update.message.message_id);
+
+        await ctx.deleteMessage(ctx.session.prevMessage);
+
         ctx.scene.enter('bookSearch');
       });
     });
@@ -52,7 +57,7 @@ export default class authorSearch {
 
       await ctx.deleteMessage(ctx.session.prevMessage);
 
-      ctx.reply('Выберите автора из меню', Markup.keyboard(authorSearch.authorButtons()).oneTime());
+      ctx.session.prevMessage = (await ctx.reply('Выберите автора из меню', Markup.keyboard(authorSearch.authorButtons()).oneTime())).message_id;
     });
 
     return scene;

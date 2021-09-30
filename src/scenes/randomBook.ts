@@ -18,9 +18,9 @@ export default class RandomBook {
     exitOnMain: 'EXIT_FROM_RANDOM',
   }
 
-  static ONE_MORE_BUTTON = [Markup.button.callback('🎲 Другую книгу', RandomBook.ACTIONS.anotherOne)]
+  static ONE_MORE_BUTTON = [Markup.button.callback('🎲 Другую книгу', RandomBook.ACTIONS.anotherOne)];
 
-  static EXIT_BUTTON = [Markup.button.callback('⬅️ Выход', RandomBook.ACTIONS.exitOnMain)]
+  static EXIT_BUTTON = [Markup.button.callback('⬅️ Выход', RandomBook.ACTIONS.exitOnMain)];
 
   static init(): Scenes.BaseScene<Bot.IContext> {
     const scene = new Scenes.BaseScene<Bot.IContext>('random');
@@ -46,7 +46,9 @@ export default class RandomBook {
 
         const { data: list } = await axios.get('http://localhost:3000/books');
 
-        const bookId = getRandomInt(1, list.length);
+        const bookId = getRandomInt(0, list.length);
+
+        console.log(bookId);
 
         ctx.deleteMessage(msgId);
         ctx.deleteMessage(sceneEnterMsgId);
