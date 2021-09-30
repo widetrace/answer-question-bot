@@ -15,6 +15,15 @@ interface book {
 export default class bookSearch {
   static list: Array<book>
 
+  private static ACTIONS = {
+    chooseBook: 'CHOOSE_ANOTHER_BOOK',
+    exitOMain: 'EXIT_FROM_BOOK_SEARCH',
+  }
+
+  static CHOOSE_BOOK_BUTTON = [Markup.button.callback('Выбрать другую книгу', bookSearch.ACTIONS.chooseBook)];
+
+  static EXIT_BUTTON = [Markup.button.callback('Выход', bookSearch.ACTIONS.exitOMain)];
+
   static buttons(): Array<string> {
     const arrayButtons = [];
 
@@ -25,10 +34,22 @@ export default class bookSearch {
     return arrayButtons;
   }
 
+  static bookButtons() {
+
+  }
+
   static hearings(scene: Scenes.BaseScene<Bot.IContext>) {
     this.list.forEach((el) => {
-      scene.hears(el.name, (ctx) => {
-        ctx.reply(el.short);
+      scene.hears(el.name, async (ctx) => {
+        await ctx.deleteMessage(ctx.session.prevMessage);
+        await ctx.deleteMessage(ctx.update.message.message_id);
+
+        ctx.reply(el.short, Markup.inlineKeyboard(
+          [
+            bookSearch.CHOOSE_BOOK_BUTTON,
+            bookSearch.EXIT_BUTTON,
+          ],
+        ));
       });
     });
   }
@@ -47,7 +68,16 @@ export default class bookSearch {
 
       bookSearch.hearings(scene);
 
-      ctx.reply('Выберите книгу из меню', Markup.keyboard(bookSearch.buttons()).oneTime());
+      ctx.session.prevMessage = (await ctx.reply('Выберите книгу из меню', Markup.keyboard(bookSearch.buttons()).oneTime())).message_id;
+    });
+
+    scene.action(bookSearch.ACTIONS.chooseBook, (ctx) => {
+      ctx.scene.reenter();
+    });
+
+    scene.action(bookSearch.ACTIONS.exitOMain, async (ctx) => {
+      await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+      ctx.scene.enter('start');
     });
 
     return scene;
