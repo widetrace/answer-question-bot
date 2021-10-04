@@ -8,6 +8,7 @@ export default class SearchScene {
   private static ACTIONS = {
     findByCountry: 'FIND_BY_COUNTRY',
     findBySurname: 'FIND_BY_NAME',
+    findByTitle: 'FIND_BY_BOOK_TITLE',
     findByTag: 'FIND_BY_TAG',
     exitFromSearch: 'EXIT_FROM_SEARCH',
   }
@@ -15,6 +16,7 @@ export default class SearchScene {
   static FILTER_BUTTONS = [
     [Markup.button.callback('👉 Поиск по странам', SearchScene.ACTIONS.findByCountry)],
     [Markup.button.callback('👉 Поиск по фамилии', SearchScene.ACTIONS.findBySurname)],
+    [Markup.button.callback('👉 Поиск по названию книги', SearchScene.ACTIONS.findByTitle)],
     [Markup.button.callback('👉 Поиск по ключевому слову', SearchScene.ACTIONS.findByTag)],
   ]
 
@@ -48,6 +50,10 @@ export default class SearchScene {
 
     scene.action(SearchScene.ACTIONS.findBySurname, async (ctx) => {
       ctx.scene.enter('nameSearch');
+    });
+
+    scene.action(SearchScene.ACTIONS.findByTitle, (ctx) => {
+      ctx.scene.enter('titleSearch');
     });
 
     return scene;
