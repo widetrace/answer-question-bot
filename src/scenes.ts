@@ -9,6 +9,7 @@ import AuthorSearch from './scenes/authorSearch';
 import BookSearch from './scenes/bookSearch';
 import TitleSearch from './scenes/titleSearch';
 import NameSearch from './scenes/nameSearch';
+import tagSearch from './scenes/tagSearch';
 
 import RandomBook from './scenes/randomBook';
 
@@ -21,6 +22,7 @@ const scenes = [
   BookSearch.init(),
   TitleSearch.init(),
   RandomBook.init(),
+  tagSearch.init(),
 ];
 
 export default scenes;

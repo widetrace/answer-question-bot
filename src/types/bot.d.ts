@@ -10,6 +10,7 @@ declare namespace Bot {
     prevMessage: number,
     countryId: number,
     authorId: number,
+    tagId: number
   }
 
   interface IContext extends Context {
