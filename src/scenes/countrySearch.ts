@@ -19,10 +19,6 @@ export default class countrySearch {
         throw new Error(error);
       }
 
-      if (ctx.callbackQuery.message.message_id) {
-        await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
-      }
-
       ({ message_id: ctx.session.prevMessage } = await ctx.reply('Введите название страны'));
     });
 

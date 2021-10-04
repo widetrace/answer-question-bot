@@ -35,10 +35,6 @@ export default class NameSearch {
     const scene = new Scenes.BaseScene<Bot.IContext>('nameSearch');
 
     scene.enter(async (ctx) => {
-      if (ctx.callbackQuery.message.message_id) {
-        await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
-      }
-
       ctx.session.prevMessage = (await ctx.reply('Введите фамилию писателя')).message_id;
     });
 

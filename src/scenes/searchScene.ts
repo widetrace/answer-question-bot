@@ -44,16 +44,28 @@ export default class SearchScene {
       ctx.scene.enter('start');
     });
 
-    scene.action(SearchScene.ACTIONS.findByCountry, (ctx) => {
+    scene.action(SearchScene.ACTIONS.findByCountry, async (ctx) => {
+      await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+
       ctx.scene.enter('countrySearch');
     });
 
     scene.action(SearchScene.ACTIONS.findBySurname, async (ctx) => {
+      await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+
       ctx.scene.enter('nameSearch');
     });
 
-    scene.action(SearchScene.ACTIONS.findByTitle, (ctx) => {
+    scene.action(SearchScene.ACTIONS.findByTitle, async (ctx) => {
+      await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+
       ctx.scene.enter('titleSearch');
+    });
+
+    scene.action(SearchScene.ACTIONS.findByTag, async (ctx) => {
+      await ctx.deleteMessage(ctx.callbackQuery.message.message_id);
+
+      ctx.scene.enter('tagSearch');
     });
 
     return scene;

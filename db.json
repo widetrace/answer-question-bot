@@ -69,6 +69,11 @@
       "id": 13,
       "name": { "first": "Марина", "second": "Цветаева" },
       "country": 1
+    },
+    {
+      "id": 14,
+      "name": { "first": "Сергей", "second": "Минаев" },
+      "country": 1
     }
   ],
   "books": [
@@ -100,13 +105,32 @@
       "id": 5,
       "name": "Казус Вагнера",
       "short": "Про казус Вагнера",
-      "author": 2
+      "author": 2,
+      "tag": 6
     },
     {
       "id": 6,
       "name": "Зов предков",
       "short": "Предки зовут",
       "author": 3
+    },
+    {
+      "id": 7,
+      "name": "Dyxless",
+      "short": "dyx",
+      "author": 14
+    },
+    {
+      "id": 8,
+      "name": "videoty",
+      "short": "videots",
+      "author": 14
+    },
+    {
+      "id": 9,
+      "name": "videoty 2",
+      "short": "videots 2",
+      "author": 14
     }
   ],
   "tags": [
