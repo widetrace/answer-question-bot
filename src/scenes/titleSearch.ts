@@ -36,7 +36,7 @@ export default class titleSearch {
       await ctx.deleteMessage(ctx.session.prevMessage);
 
       try {
-        book = (await axios.get(encodeURI(`http://localhost:3000/books?title=${ctx.message}`))).data;
+        book = (await axios.get(encodeURI(`http://localhost:3000/books?name=${ctx.message.text}`))).data;
       } catch (err) {
         ctx.scene.enter('start');
         throw new Error(err);
@@ -45,10 +45,11 @@ export default class titleSearch {
       if (!book.length) {
         ctx.reply('Такой книги нет, или название неверно',
           Markup.inlineKeyboard(titleSearch.BUTTONS));
+      } else {
+        ctx.reply(book[0].short, Markup.inlineKeyboard(titleSearch.BUTTONS));
       }
 
       ctx.deleteMessage(ctx.message.message_id);
-      ctx.reply(book[0].short, Markup.inlineKeyboard(titleSearch.BUTTONS));
     });
 
     scene.action(titleSearch.ACTIONS.findAnotherOne, async (ctx) => {
