@@ -4,14 +4,7 @@
 import { Markup, Scenes } from 'telegraf';
 import axios from 'axios';
 import Bot from '../types/bot';
-
-interface book {
-  id: number,
-  name: string,
-  short: string,
-  author: number,
-  tag: number | Array<number>
-}
+import { book } from '../interfaces/baseObj';
 
 export default class bookSearch {
   static list: Array<book>

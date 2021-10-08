@@ -1,9 +1,13 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 
+// Сделать:
+//  * Изменить запрос книги -- если в переменной уже есть список, то не загружать его снова
+
 import axios from 'axios';
 import { Markup, Scenes } from 'telegraf';
 import Bot from '../types/bot';
+import { book } from '../interfaces/baseObj';
 
 // Максимум не включается, минимум включается
 function getRandomInt(min: number, max: number) {
@@ -13,6 +17,8 @@ function getRandomInt(min: number, max: number) {
 }
 
 export default class RandomBook {
+  static list: Array<book>
+
   private static ACTIONS = {
     anotherOne: 'ONE_MORE_BOOK',
     exitOnMain: 'EXIT_FROM_RANDOM',
@@ -44,16 +50,14 @@ export default class RandomBook {
       setTimeout(async () => {
         clearInterval(timerId);
 
-        const { data: list } = await axios.get('http://localhost:3000/books');
+        ({ data: this.list } = await axios.get('http://localhost:3000/books'));
 
-        const bookId = getRandomInt(0, list.length);
-
-        console.log(bookId);
+        const bookId = getRandomInt(0, this.list.length);
 
         ctx.deleteMessage(msgId);
         ctx.deleteMessage(sceneEnterMsgId);
 
-        ctx.reply(`Выбранная книга ---> ${list[bookId].name}`, Markup
+        ctx.reply(`Выбранная книга ---> ${this.list[bookId].name}`, Markup
           .inlineKeyboard([RandomBook.ONE_MORE_BUTTON, RandomBook.EXIT_BUTTON]));
       }, 3500);
     });

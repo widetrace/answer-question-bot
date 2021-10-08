@@ -28,14 +28,6 @@ export default class SearchScene {
     scene.enter(async (ctx) => {
       ctx.reply('📚 Выберите фильтр: ',
         Markup.inlineKeyboard([...SearchScene.FILTER_BUTTONS, SearchScene.EXIT_BUTTON]));
-
-      // ctx.contextProp = 'just prop';
-      // ctx.session.sessionProp = 'session session prop';
-      // ctx.scene.session.sceneSessionProp = 321;
-
-      // console.log(ctx.contextProp);
-      // console.log(ctx.session.sessionProp);
-      // console.log(ctx.scene.session.sceneSessionProp);
     });
 
     scene.action(SearchScene.ACTIONS.exitFromSearch, async (ctx) => {

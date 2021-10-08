@@ -4,13 +4,7 @@
 import axios from 'axios';
 import { Markup, Scenes } from 'telegraf';
 import Bot from '../types/bot';
-
-interface bookObj {
-  id: number,
-  name: string,
-  short: string,
-  author: number,
-}
+import { book } from '../interfaces/baseObj';
 
 export default class titleSearch {
   private static ACTIONS = {
@@ -31,22 +25,22 @@ export default class titleSearch {
     });
 
     scene.on('text', async (ctx) => {
-      let book: Array<bookObj>;
+      let bookSearch: Array<book>;
 
       await ctx.deleteMessage(ctx.session.prevMessage);
 
       try {
-        book = (await axios.get(encodeURI(`http://localhost:3000/books?name=${ctx.message.text}`))).data;
+        bookSearch = (await axios.get(encodeURI(`http://localhost:3000/books?name=${ctx.message.text}`))).data;
       } catch (err) {
         ctx.scene.enter('start');
         throw new Error(err);
       }
 
-      if (!book.length) {
+      if (!bookSearch.length) {
         ctx.reply('Такой книги нет, или название неверно',
           Markup.inlineKeyboard(titleSearch.BUTTONS));
       } else {
-        ctx.reply(book[0].short, Markup.inlineKeyboard(titleSearch.BUTTONS));
+        ctx.reply(bookSearch[0].short, Markup.inlineKeyboard(titleSearch.BUTTONS));
       }
 
       ctx.deleteMessage(ctx.message.message_id);

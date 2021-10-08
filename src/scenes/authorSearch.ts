@@ -4,18 +4,10 @@
 import { Markup, Scenes } from 'telegraf';
 import axios from 'axios';
 import Bot from '../types/bot';
-
-interface authorsList {
-  id: number,
-  name: {
-    first: string,
-    second: string,
-  },
-  country: number,
-}
+import { author } from '../interfaces/baseObj';
 
 export default class authorSearch {
-  static list: Array<authorsList>
+  static list: Array<author>
 
   static authorButtons(): Array<string> {
     const arrayButtons = [];

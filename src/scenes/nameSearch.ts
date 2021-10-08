@@ -4,22 +4,14 @@
 import { Scenes } from 'telegraf';
 import axios from 'axios';
 import Bot from '../types/bot';
+import { author } from '../interfaces/baseObj';
 
 function upperCaseFirstLetter(word: string): string {
   return word[0].toUpperCase() + word.substring(1).toLowerCase();
 }
 
-interface authorsList {
-  id: number,
-  name: {
-    first: string,
-    second: string,
-  },
-  country: number,
-}
-
 export default class NameSearch {
-  static list: Array<authorsList>
+  static list: Array<author>
 
   static authorButtons(): Array<string> {
     const arrayButtons = [];

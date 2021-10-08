@@ -4,15 +4,16 @@
 import { Scenes } from 'telegraf';
 import axios from 'axios';
 import Bot from '../types/bot';
+import { country } from '../interfaces/baseObj';
 
 export default class countrySearch {
-  static countriesList;
+  static countriesList: Array<country>;
 
   static init(): Scenes.BaseScene<Bot.IContext> {
     const scene = new Scenes.BaseScene<Bot.IContext>('countrySearch');
     scene.enter(async (ctx) => {
       try {
-        countrySearch.countriesList = (await axios.get('http://localhost:3000/countries')).data;
+        this.countriesList = (await axios.get('http://localhost:3000/countries')).data;
       } catch (error) {
         ctx.reply('Что-то не так с базой данных');
         ctx.scene.enter('start');
@@ -23,14 +24,14 @@ export default class countrySearch {
     });
 
     scene.on('text', (ctx) => {
-      const countryNames = countrySearch.countriesList.map((country) => country.name);
+      const countryNames = this.countriesList.map((land) => land.name);
 
       if (countryNames.includes(ctx.message.text.toLowerCase())) {
         ctx.deleteMessage(ctx.session.prevMessage);
 
         ({ message_id: ctx.session.prevMessage } = ctx.message);
 
-        ({ id: ctx.session.countryId } = countrySearch.countriesList
+        ({ id: ctx.session.countryId } = this.countriesList
           .find((el) => el.name === ctx.message.text.toLowerCase()));
 
         ctx.scene.enter('authorSearch');

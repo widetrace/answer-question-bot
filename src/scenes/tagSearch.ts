@@ -4,14 +4,10 @@
 import { Markup, Scenes } from 'telegraf';
 import axios from 'axios';
 import Bot from '../types/bot';
-
-interface tagObj {
-  id: number,
-  name: string
-}
+import { tag } from '../interfaces/baseObj';
 
 export default class tagSearch {
-  static list: Array<tagObj>
+  static list: Array<tag>
 
   static BUTTONS(): Array<string> {
     const arrayButtons: Array<string> = [];
