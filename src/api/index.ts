@@ -2,17 +2,37 @@
 /* eslint-disable import/extensions */
 
 import axios from 'axios';
-import { author } from '../interfaces/baseObj';
+import { author, book } from '../interfaces/baseObj';
 
 class API {
   readonly LINK = 'http://localhost:3000/';
 
-  async getAuthors(countryId): Promise<Array<author>> {
+  async getAuthors(countryId: number): Promise<Array<author>> {
     let result;
     try {
       result = (await axios.get(`${this.LINK}authors?country=${countryId}`)).data;
     } catch (err) {
-      result = [false];
+      throw new Error(err);
+    }
+
+    return result;
+  }
+
+  async getBooks(data): Promise<Array<book>> {
+    let result: Array<book>;
+    let url = `${this.LINK}books`;
+
+    const { authorId, tagId } = data;
+
+    if (authorId) {
+      url += `?author=${authorId}`;
+    } else {
+      url += `?tag=${tagId}`;
+    }
+
+    try {
+      result = (await axios.get(url)).data;
+    } catch (err) {
       throw new Error(err);
     }
 

@@ -2,7 +2,7 @@
 /* eslint-disable import/extensions */
 
 import { Markup, Scenes } from 'telegraf';
-import axios from 'axios';
+import API from '../api';
 import Bot from '../types/bot';
 import { book } from '../interfaces/baseObj';
 
@@ -57,13 +57,10 @@ export default class bookSearch {
       }
 
       try {
-        let url = 'http://localhost:3000/books';
-        if (ctx.session.authorId) {
-          url += `?author=${ctx.session.authorId}`;
-        } else {
-          url += `?tag=${ctx.session.tagId}`;
-        }
-        bookSearch.list = (await axios.get(url)).data;
+        this.list = await API.getBooks({
+          authorId: ctx.session.authorId,
+          tagId: ctx.session.tagId,
+        });
       } catch (error) {
         ctx.reply('Что-то не так с базой данных');
         ctx.scene.enter('start');
