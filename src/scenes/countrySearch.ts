@@ -2,7 +2,7 @@
 /* eslint-disable import/extensions */
 
 import { Scenes } from 'telegraf';
-import axios from 'axios';
+import API from '../api';
 import Bot from '../types/bot';
 import { country } from '../interfaces/baseObj';
 
@@ -13,7 +13,7 @@ export default class countrySearch {
     const scene = new Scenes.BaseScene<Bot.IContext>('countrySearch');
     scene.enter(async (ctx) => {
       try {
-        this.countriesList = (await axios.get('http://localhost:3000/countries')).data;
+        this.countriesList = await API.getCountries();
       } catch (error) {
         ctx.reply('Что-то не так с базой данных');
         ctx.scene.enter('start');

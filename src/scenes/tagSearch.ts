@@ -2,7 +2,7 @@
 /* eslint-disable import/extensions */
 
 import { Markup, Scenes } from 'telegraf';
-import axios from 'axios';
+import api from '../api';
 import Bot from '../types/bot';
 import { tag } from '../interfaces/baseObj';
 
@@ -38,7 +38,7 @@ export default class tagSearch {
 
     scene.enter(async (ctx) => {
       try {
-        tagSearch.list = (await axios.get('http://localhost:3000/tags')).data;
+        this.list = await api.getTags();
       } catch (error) {
         ctx.reply('Что-то не так с базой данных');
         ctx.scene.enter('start');
