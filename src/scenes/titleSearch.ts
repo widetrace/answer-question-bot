@@ -1,8 +1,8 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 
-import axios from 'axios';
 import { Markup, Scenes } from 'telegraf';
+import api from '../api';
 import Bot from '../types/bot';
 import { book } from '../interfaces/baseObj';
 
@@ -30,7 +30,7 @@ export default class titleSearch {
       await ctx.deleteMessage(ctx.session.prevMessage);
 
       try {
-        bookSearch = (await axios.get(encodeURI(`http://localhost:3000/books?name=${ctx.message.text}`))).data;
+        bookSearch = await api.getByTitle(ctx.message.text);
       } catch (err) {
         ctx.scene.enter('start');
         throw new Error(err);

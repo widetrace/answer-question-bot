@@ -74,6 +74,21 @@ class API {
     return result;
   }
 
+  async getByTitle(title: string): Promise<Array<book>> {
+    let result: Array<book>;
+    let url = `${this.LINK}books?name=`;
+
+    url += encodeURI(title);
+
+    try {
+      result = (await axios.get(url)).data;
+    } catch (err) {
+      throw new Error(err);
+    }
+
+    return result;
+  }
+
   async getCountries(): Promise<Array<country>> {
     let result: Array<country>;
 
