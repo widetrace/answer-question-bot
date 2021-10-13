@@ -2,13 +2,9 @@
 /* eslint-disable import/extensions */
 
 import { Scenes } from 'telegraf';
-import axios from 'axios';
+import api from '../api';
 import Bot from '../types/bot';
 import { author } from '../interfaces/baseObj';
-
-function upperCaseFirstLetter(word: string): string {
-  return word[0].toUpperCase() + word.substring(1).toLowerCase();
-}
 
 export default class NameSearch {
   static list: Array<author>
@@ -31,10 +27,8 @@ export default class NameSearch {
     });
 
     scene.on('text', async (ctx) => {
-      const LINK = encodeURI(`http://localhost:3000/authors?name.second=${upperCaseFirstLetter(ctx.message.text)}`);
-
       try {
-        this.list = (await axios.get(LINK)).data;
+        this.list = await api.getAuthor(ctx.message.text);
       } catch (err) {
         ctx.reply('Что-то не так с базой данных');
         ctx.scene.enter('start');

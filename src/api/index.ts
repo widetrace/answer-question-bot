@@ -12,6 +12,21 @@ interface getBookData {
 class API {
   readonly LINK = 'http://localhost:3000/';
 
+  async getAuthor(surname: string): Promise<Array<author>> {
+    let result;
+    let link = `${this.LINK}authors?name.second`;
+
+    link += encodeURI(API.upFirstLetter(surname));
+
+    try {
+      result = (await axios.get(link)).data;
+    } catch (err) {
+      throw new Error(err);
+    }
+
+    return result;
+  }
+
   async getAuthors(countryId: number): Promise<Array<author>> {
     let result;
     try {
@@ -54,6 +69,10 @@ class API {
     }
 
     return result;
+  }
+
+  static upFirstLetter(word: string): string {
+    return word[0].toUpperCase() + word.substring(1).toLowerCase();
   }
 }
 
