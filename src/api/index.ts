@@ -2,7 +2,9 @@
 /* eslint-disable import/extensions */
 
 import axios from 'axios';
-import { author, book, country } from '../interfaces/baseObj';
+import {
+  author, book, country, tag,
+} from '../interfaces/baseObj';
 
 interface getBookData {
   authorId: number,
@@ -77,6 +79,19 @@ class API {
 
     try {
       result = (await axios.get(`${this.LINK}countries`)).data;
+    } catch (err) {
+      throw new Error(err);
+    }
+
+    return result;
+  }
+
+  async getTags(): Promise<Array<tag>> {
+    let result: Array<tag>;
+    const url = `${this.LINK}tags`;
+
+    try {
+      result = (await axios.get(url)).data;
     } catch (err) {
       throw new Error(err);
     }

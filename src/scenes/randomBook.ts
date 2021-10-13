@@ -3,8 +3,6 @@
 
 // Сделать:
 //  * Изменить запрос книги -- если в переменной уже есть список, то не загружать его снова
-
-import axios from 'axios';
 import { Markup, Scenes } from 'telegraf';
 import api from '../api';
 import Bot from '../types/bot';
