@@ -13,7 +13,7 @@ class API {
   readonly LINK = 'http://localhost:3000/';
 
   async getAuthor(surname: string): Promise<Array<author>> {
-    let result;
+    let result: Array<author>;
     let link = `${this.LINK}authors?name.second`;
 
     link += encodeURI(API.upFirstLetter(surname));
@@ -28,7 +28,7 @@ class API {
   }
 
   async getAuthors(countryId: number): Promise<Array<author>> {
-    let result;
+    let result: Array<author>;
     try {
       result = (await axios.get(`${this.LINK}authors?country=${countryId}`)).data;
     } catch (err) {
@@ -59,8 +59,21 @@ class API {
     return result;
   }
 
+  async getAllBooks(): Promise<Array<book>> {
+    let result: Array<book>;
+    const url = `${this.LINK}books`;
+
+    try {
+      result = (await axios.get(url)).data;
+    } catch (err) {
+      throw new Error(err);
+    }
+
+    return result;
+  }
+
   async getCountries(): Promise<Array<country>> {
-    let result;
+    let result: Array<country>;
 
     try {
       result = (await axios.get(`${this.LINK}countries`)).data;

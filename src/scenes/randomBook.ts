@@ -6,6 +6,7 @@
 
 import axios from 'axios';
 import { Markup, Scenes } from 'telegraf';
+import api from '../api';
 import Bot from '../types/bot';
 import { book } from '../interfaces/baseObj';
 
@@ -50,7 +51,7 @@ export default class RandomBook {
       setTimeout(async () => {
         clearInterval(timerId);
 
-        ({ data: this.list } = await axios.get('http://localhost:3000/books'));
+        this.list = await api.getAllBooks();
 
         const bookId = getRandomInt(0, this.list.length);
 
